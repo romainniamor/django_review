@@ -1,0 +1,47 @@
+{% extends 'my_app/base.html' %} {% block content %}
+<div class="col-md-6 m-auto">
+  <div style="height: 70px; margin: 10px 0px">
+    {% if messages %} {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ message }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% endfor %} {% endif %}
+  </div>
+  {% if user.is_authenticated %}
+
+  <h2>Welcome</h2>
+  {% else %}
+  <h2 class="">Login</h2>
+  <hr />
+  <form action="{% url 'my_app:home' %}" method="POST" class="">
+    {% csrf_token %}
+    <div class="form-group my-3">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        class="form-control"
+        name="username"
+        placeholder="Username"
+        required
+      />
+    </div>
+    <div class="form-group my-3">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        placeholder="Password"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+</div>
+{% endif %} {% endblock %}
