@@ -42,6 +42,8 @@
       />
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
+    <small class="mx-3 text-muted">You don't have an account yet?</small>
+    <a class="text-dark" href="{% url 'my_app:register' %}">Register</a>
   </form>
 </div>
 {% endif %} {% endblock %}

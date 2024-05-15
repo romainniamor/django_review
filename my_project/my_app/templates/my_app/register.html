@@ -1,10 +1,11 @@
 {% extends 'my_app/base.html' %} {% block content %}
 
 <div class="col-md-6 m-auto">
-  <div style="height: 70px; margin: 10px 0px">
-    {% if messages %} {% for message in messages %}
+  <div style="min-height: 70px; margin: 10px 0px">
+    {% if form.errors %}
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ message }}
+      Your registration has problems: {% for field in form %} {{ field.errors }}
+      {% endfor %}
       <button
         type="button"
         class="btn-close"
@@ -12,10 +13,19 @@
         aria-label="Close"
       ></button>
     </div>
-    {% endfor %} {% endif %}
+    {% endif %}
   </div>
 
   <h2>Register</h2>
   <hr />
+  <form method="POST">
+    {% csrf_token %} {% for field in form %}
+    <div class="form-group my-3">
+      {{field.label}}{{ field }} {% if field.help_text %}
+      <small class="">{{ field.help_text |safe }}</small>
+      {% endif %} {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-success">Register</button>
+  </form>
 </div>
 {% endblock %}
