@@ -1,21 +1,21 @@
 {% extends 'my_app/base.html' %} {% block content %}
 
-<div class="col-md-6 m-auto">
-  <div style="min-height: 70px; margin: 10px 0px">
-    {% if form.errors %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      Your registration has problems: {% for field in form %} {{ field.errors }}
-      {% endfor %}
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-    {% endif %}
+<div style="min-height: 50px; margin: 10px 0px">
+  {% if form.errors %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    Your registration has problems: {% for field in form %} {{ field.errors }}
+    {% endfor %}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
   </div>
+  {% endif %}
+</div>
 
+<div class="col-md-6 m-auto">
   <h2>Register</h2>
   <hr />
   <form method="POST">

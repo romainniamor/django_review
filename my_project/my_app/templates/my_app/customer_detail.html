@@ -1,6 +1,9 @@
 {% extends 'my_app/base.html' %} {% block content %}
 <div class="col-md-6 m-auto">
-  <h2>Customer</h2>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Customer Details</h2>
+    <a href="{% url 'my_app:home' %}" class="btn btn-outline-dark">Back</a>
+  </div>
   <hr />
   <div class="card border-light mb-3" style="max-width: 18rem">
     <div class="card-header">
@@ -15,7 +18,11 @@
       </ul>
     </div>
     <div class="card-footer">
-      <a href="{% url 'my_app:home' %}" class="btn btn-success btn-sm">Back</a>
+      <a
+        href="{% url 'my_app:update_customer' customer.id %}"
+        class="btn btn-success btn-sm"
+        >Edit</a
+      >
       <!-- Button trigger modal -->
       <button
         type="button"
