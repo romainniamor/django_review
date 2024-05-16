@@ -15,8 +15,30 @@
   </div>
   {% if user.is_authenticated %}
 
-  <h2>Welcome</h2>
+  <h2>Customers</h2>
+  <hr />
+  {% if customers %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in customers %}
+      <tr>
+        <td>{{ customer.first_name }}</td>
+        <td>{{ customer.last_name }}</td>
+        <td>{{ customer.email }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
   {% else %}
+  <p>No customers found in database</p>
+  {% endif %} {% else %}
   <h2 class="">Login</h2>
   <hr />
   <form action="{% url 'my_app:home' %}" method="POST" class="">
@@ -46,4 +68,5 @@
     <a class="text-dark" href="{% url 'my_app:register' %}">Register</a>
   </form>
 </div>
+
 {% endif %} {% endblock %}
