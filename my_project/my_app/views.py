@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import redirect
-from .forms import RegisterForm
+from .forms import RegisterForm, CustomerForm
 from .models import Customer
 
 
@@ -12,7 +12,6 @@ app_name = 'my_app'
 def home(request):
     customers = Customer.objects.all().order_by('last_name')
     context = {'customers': customers}
-
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -65,3 +64,19 @@ def delete_customer(request, customer_id):
         messages.success(request, 'Your not authorized to delete this customer')
     return redirect('my_app:home')
 
+def add_customer(request):
+    form = CustomerForm(request.POST)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Customer has been added')
+                return redirect('my_app:home')
+        else:
+            form = CustomerForm()
+            return render(request, 'my_app/add_customer.html', {'form': form})
+    else:
+        messages.success(request, 'Your not authorized to add a customer')
+        return redirect('my_app:home')
+
+    return render(request, 'my_app/add_customer.html', {'form': form})
