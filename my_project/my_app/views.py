@@ -51,7 +51,9 @@ def register_user(request):
     return render(request, 'my_app/register.html', {'form': form})
 
 
-
+def customer_detail(request, customer_id):
+    customer = Customer.objects.get(id=customer_id)
+    return render(request, 'my_app/customer_detail.html', {'customer': customer})
 
 
 
