@@ -1,72 +1,74 @@
 {% extends 'my_app/base.html' %} {% block content %}
 <div class="col-md-6 m-auto">
   {% if user.is_authenticated %}
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Customers</h2>
+    <a href="{% url 'my_app:add_customer' %}" class="btn  btn-outline-dark">Add</a></div>
+    <hr />
+    {% if customers %}
 
-  <h2>Customers</h2>
-  <hr />
-  {% if customers %}
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Email</th>
+          <th scope=""></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
 
-  <table class="table table-striped table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
-        <th scope="col">Email</th>
-        <th scope=""></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for customer in customers %}
+        <tr>
+          <td>{{ customer.first_name }}</td>
+          <td>{{ customer.last_name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>
+            <a
+              href="{% url 'my_app:customer_detail' customer.id %}"
+              class="btn btn-success btn-sm"
+            >
+              View
+            </a>
+          </td>
+        </tr>
 
-      <tr>
-        <td>{{ customer.first_name }}</td>
-        <td>{{ customer.last_name }}</td>
-        <td>{{ customer.email }}</td>
-        <td>
-          <a
-            href="{% url 'my_app:customer_detail' customer.id %}"
-            class="btn btn-success btn-sm"
-          >
-            View
-          </a>
-        </td>
-      </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
-      {% endfor %}
-    </tbody>
-  </table>
+    {% else %}
+    <p>No customers found in database</p>
+    {% endif %} {% else %}
+    <h2 class="">Login</h2>
+    <hr />
+    <form action="{% url 'my_app:home' %}" method="POST" class="">
+      {% csrf_token %}
+      <div class="form-group my-3">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          placeholder="Username"
+          required
+        />
+      </div>
+      <div class="form-group my-3">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-success">Submit</button>
+      <small class="mx-3 text-muted">You don't have an account yet?</small>
+      <a class="text-dark" href="{% url 'my_app:register' %}">Register</a>
+    </form>
+  </div>
 
-  {% else %}
-  <p>No customers found in database</p>
-  {% endif %} {% else %}
-  <h2 class="">Login</h2>
-  <hr />
-  <form action="{% url 'my_app:home' %}" method="POST" class="">
-    {% csrf_token %}
-    <div class="form-group my-3">
-      <label for="username">Username</label>
-      <input
-        type="text"
-        class="form-control"
-        name="username"
-        placeholder="Username"
-        required
-      />
-    </div>
-    <div class="form-group my-3">
-      <label for="password">Password</label>
-      <input
-        type="password"
-        class="form-control"
-        name="password"
-        placeholder="Password"
-        required
-      />
-    </div>
-    <button type="submit" class="btn btn-success">Submit</button>
-    <small class="mx-3 text-muted">You don't have an account yet?</small>
-    <a class="text-dark" href="{% url 'my_app:register' %}">Register</a>
-  </form>
+  {% endif %} {% endblock %}
 </div>
-
-{% endif %} {% endblock %}
