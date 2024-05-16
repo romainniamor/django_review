@@ -80,3 +80,22 @@ def add_customer(request):
         return redirect('my_app:home')
 
     return render(request, 'my_app/add_customer.html', {'form': form})
+
+
+def update_customer(request, customer_id):
+    customer = Customer.objects.get(id=customer_id)
+    form = CustomerForm(request.POST or None, instance=customer)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Customer has been updated')
+                return redirect('my_app:home')
+        else:
+            form = CustomerForm(instance=customer)
+            return render(request, 'my_app/update_customer.html', {'form': form})
+    else:
+        messages.success(request, 'Your not authorized to update this customer')
+        return redirect('my_app:home')
+
+    return render(request, 'my_app/update_customer.html', {'form': form})
