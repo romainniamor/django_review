@@ -3,12 +3,17 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import redirect
 from .forms import RegisterForm
+from .models import Customer
 
 
 app_name = 'my_app'
 
 
 def home(request):
+    customers = Customer.objects.all().order_by('last_name')
+    context = {'customers': customers}
+
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -20,7 +25,7 @@ def home(request):
         else:
             messages.success(request, 'Invalid login credentials')
             return redirect('my_app:home')
-    return render(request, 'my_app/home.html')
+    return render(request, 'my_app/home.html', context)
 
 def logout_user(request):
     logout(request)
@@ -44,6 +49,8 @@ def register_user(request):
         return render(request, 'my_app/register.html', {'form': form})
 
     return render(request, 'my_app/register.html', {'form': form})
+
+
 
 
 
