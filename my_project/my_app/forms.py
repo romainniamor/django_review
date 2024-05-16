@@ -3,7 +3,8 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-#import signupForm
+from .models import Customer
+
 
 
 
@@ -28,3 +29,15 @@ class RegisterForm(UserCreationForm):
         self.fields['password2'].help_text = '<span class="form-text text-muted">Enter the same password as before, for verification.</span>'
 
 
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['first_name', 'last_name', 'email', 'address', 'city', 'zipcode']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'city': forms.TextInput(attrs={'class': 'form-control'}),
+            'zipcode': forms.TextInput(attrs={'class': 'form-control'}),
+        }
