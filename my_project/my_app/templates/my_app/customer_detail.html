@@ -1,3 +1,20 @@
-<div>
-  <p>{{ customer.first_name }} {{ customer.last_name }}</p>
+{% extends 'my_app/base.html' %} {% block content %}
+<div class="col-md-6 m-auto">
+  <h2>Customer</h2>
+  <hr />
+  <div class="card border-light mb-3" style="max-width: 18rem">
+    <div class="card-header">
+      {{customer.first_name}} {{customer.last_name}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{customer.email}}</h5>
+      <ul class="card-text">
+        <li class="">{{customer.address}}</li>
+        <li class="">{{customer.city}}</li>
+        <li class="">{{customer.zipcode}}</li>
+      </ul>
+    </div>
+  </div>
+
+  {% endblock %}
 </div>
