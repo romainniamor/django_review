@@ -55,5 +55,13 @@ def customer_detail(request, customer_id):
     customer = Customer.objects.get(id=customer_id)
     return render(request, 'my_app/customer_detail.html', {'customer': customer})
 
-
+def delete_customer(request, customer_id):
+    if request.user.is_authenticated:
+        customer = Customer.objects.get(id=customer_id)
+        customer.delete()
+        messages.success(request, 'Customer has been deleted')
+        return redirect('my_app:home')
+    else:
+        messages.success(request, 'Your not authorized to delete this customer')
+    return redirect('my_app:home')
 
