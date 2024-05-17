@@ -108,14 +108,16 @@ def search_customer(request):
         search = request.POST.get('search_customer', None)
         print('search', search )
 
-        if search is not None:
+        if search is not None and search != '':
             customers = Customer.objects.filter(first_name__icontains=search) | Customer.objects.filter(last_name__icontains=search) | Customer.objects.filter(city__icontains=search)
             print('customers', customers)
-             # Sérialiser les objets
             customer_list = list(customers.values('id', 'first_name', 'last_name', 'city'))
+            if not customer_list:
+                return JsonResponse({'message': 'No customer found'}, safe=False)
             print('customer_list', customer_list)
             return JsonResponse(customer_list, safe=False)
-    else:
-        return render(request, 'my_app/home.html')
+        return JsonResponse({'error': 'Invalid search query'}, safe=False)
+
+    return render(request, 'my_app/home.html')
 
 
