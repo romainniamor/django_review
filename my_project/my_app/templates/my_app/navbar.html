@@ -25,7 +25,30 @@
 
         {% endif %}
       </ul>
+      {% if user.is_authenticated %}
+      <div class="position-relative">
+      <form class="d-flex" method="POST" action="">
+        <input class="form-control me-2" type="search" placeholder="Search customer..." aria-label="Search" name="search_customer">
+        <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+      <ul class="list-group position-absolute w-100 "id="searchResults" style="top:100%; margin-top: 8px; max-height: 280px; overflow-y: auto; padding-rignt: 10px; z-index: 1000;">
+          <li class="list-group-item ">Cras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Morbi leo risus</li>
+          <li class="list-group-item">Porta ac consectetur ac</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+          <li class="list-group-item">Morbi leo risus</li>
+
+</ul>
+      </div>
+           {% endif %}
+
+
+
+
+
     </div>
+
   </div>
 </nav>
 

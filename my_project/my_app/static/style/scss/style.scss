@@ -2,3 +2,11 @@
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "_mixins";
 @import "_placeholders";
+
+.list-group-item {
+  cursor: pointer;
+  &:hover {
+    background-color: $dark;
+    color: $light;
+  }
+}

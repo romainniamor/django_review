@@ -11844,5 +11844,12 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.list-group-item {
+  cursor: pointer;
+}
+.list-group-item:hover {
+  background-color: #212529;
+  color: #f8f9fa;
+}
 
 /*# sourceMappingURL=style.css.map */
