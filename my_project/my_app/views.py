@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
+from django.http import JsonResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -99,3 +100,22 @@ def update_customer(request, customer_id):
         return redirect('my_app:home')
 
     return render(request, 'my_app/update_customer.html', {'form': form})
+
+#search customers by name city adress using ajax
+
+def search_customer(request):
+    if request.method == 'POST':
+        search = request.POST.get('search_customer', None)
+        print('search', search )
+
+        if search is not None:
+            customers = Customer.objects.filter(first_name__icontains=search) | Customer.objects.filter(last_name__icontains=search) | Customer.objects.filter(city__icontains=search)
+            print('customers', customers)
+             # Sérialiser les objets
+            customer_list = list(customers.values('id', 'first_name', 'last_name', 'city'))
+            print('customer_list', customer_list)
+            return JsonResponse(customer_list, safe=False)
+    else:
+        return render(request, 'my_app/home.html')
+
+
